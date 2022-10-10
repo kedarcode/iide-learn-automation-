@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "windy-forge-364809",
+  "private_key_id": "19af218316adffaa329b32d3201cc0c858e88e1f",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDK2W2TcOHQyhUB\niFwmhjKwIqZfAetY2ZrFS7TEv3Joyg4YSA6I2nBexuSa+XB8cK1u4bMNBOV7oHEJ\nnQpt6eGXh1czpvm0oL3MhUUeofcvJIigVm4Vv7vHII173D7ZKqfpN1eNqV3xi1E3\nfW6H7KBmsFZtfCJBhPvZzk/AWcwQpAq32y5BgMzVL7QvsFPGXfW/IrCxVdP1sVrJ\nxvwEOaEv3mbY7dT8N8Xk3dq5IfmSC9Wn2eV9CZxd91+CsPA2Nv7ZFWMo8BM8Evpc\nQ/wlb8ynlOTsz7pBYFrr/EYkLxibMBxO70g+LiK57prTHsGXDlCufuGdzAadsuKJ\nsJsrR6MDAgMBAAECggEACvDc3VdfUD82EG9/mOXwFScpSUKPPd5h+XY/eV7IfijR\nYQBLi5h/xLAX/T8RXbgUgqbsKccz1KeVfgRyxY7lB6LZhZ2uv84ge2F//H3IsuNw\nXKvzI0heIzvF2QJkf84Yx5Y5w+USSuIayIVpasdmhDAxDGKy1LNzHUJPDUh90Zl1\nRNRdpuFy2Mz3MvDdC6hi0Lu8hNeHyEWUaWe2/K3gA1YMM3DdUniDYTtfsxU5NKsa\n64KH9MEClJUSnzPvksiaDRJ/p+6Zp4yK9BAGstSDOF13OEIjYcB0Yxmvuvq6fxu3\nBHneIATj86lspext9gtPOrqu9vO2auX8Nvoz9Ln0kQKBgQDqDnojSEtRZtnDnbHR\n/2YPrJxYhynbgDWpeU4QiSxdC04BUclbBDw7nVrsJS6rCWn2x8GBqCj/we03gTcc\nXV53r+qu1o6FzCLsSDecojXqYB0nT9VsX9tOJx+DCRWGFOEg8rZ86oh2jz4I24oM\nazCdDb08zTrnDb+Z1JdPQv5SHwKBgQDd3fSbCJHa+2ZdgDtI/S6HdxDIsmGEp53x\nSzDYY/V9h6JN1tijU6cbJLGmS8AgXWNMVYSSAIz/R2NaEsm53hsCcq339mK2VLFF\ngqOuenKaDbYrkiksXyRBCFN5rcuRSnFqwvgXdzwNowO/PDBHuIGEQrqgYT9cNVWy\nx8/DZUP6nQKBgDLI6V92dEE5W87CDK9QB0knXtUmnsJt0zbuhy23VdTqewZ2RIZn\nKNqWjf/nIXUjGcbeGPKVFjBIV7xPYTHaYID/vqApFcuaO4mhMc/esmwkZq7894YI\nVoFio8e+1Ni+9wo7H7WC/hEbi45IdG+1YlrxfDoRHdK8fPJX2mzsUFppAoGAHuX1\nVc34uh1+4RClsQGJhFYhoUGucRIC3gLRt6EcJDJKeTqtivlwcUhH8VflVtyKoqva\nPZcUC80+WeH59AepjUq5Taojjy72TS7narok0a2NLD47u7E4VFI7hdudWQucBflH\nIcV6OI/2SqCwPJzGdMvyP7mrYEURPUe0eIrWz8UCgYBWyIqdy05KBThcZ9BWxiSp\n3FdUi/Rd8gQVuAz3Obk4b/X9iWzAScE40NALIvmALZab1/o/TWpl3LWO75pdEaae\nijG++b6/yuQo/V+4b5fjnyKtkhoQOLsKJqOIhbURap0LWTjzmGqWYf+eLiAPLEZd\nC9LYf/jIFIT6vQd6Qaf6iA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "iide-script@windy-forge-364809.iam.gserviceaccount.com",
+  "client_id": "103917563354066174506",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/iide-script%40windy-forge-364809.iam.gserviceaccount.com"
+}
