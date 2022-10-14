@@ -1,0 +1,2 @@
+[5224:2004:1013/185222.509:INFO:CONSOLE(5)] "JQMIGRATE: Migrate is installed, version 3.3.2", source: https://learn.iide.co/wp-admin/load-scripts.php?c=1&load%5Bchunk_0%5D=jquery-core,jquery-migrate,utils,jquery-ui-core,moxiejs,plupload,jquery-ui-tooltip&ver=6.0.2 (5)
+[5224:2004:1013/185225.197:ERROR:device_event_log_impl.cc(214)] [18:52:25.197] Bluetooth: bluetooth_adapter_winrt.cc:1074 Getting Default Adapter failed.
