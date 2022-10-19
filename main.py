@@ -20,34 +20,34 @@ mydb = mysql.connector.connect(
 )
 buff = 1000
 count = 1
-# driver = CreateDriver()
-# driver.get('https://learn.iide.co/wp-admin/admin.php?page=learndash-lms-reports')
-# driver.find_element(By.CLASS_NAME, 'learndash-data-reports-button').click()
+driver = CreateDriver()
+driver.get('https://learn.iide.co/wp-admin/admin.php?page=learndash-lms-reports')
+driver.find_element(By.CLASS_NAME, 'learndash-data-reports-button').click()
 
 sheetname = 'learndash_reports_user_courses_53f65102cb.csv'
 
 prev_files = os.listdir(path.resource_path(os.environ.get('DOWNLOADPATH')))
 
-# while True:
-#     data = WebDriverWait(driver, 99999999).until(
-#         EC.visibility_of_element_located((By.CLASS_NAME, 'progress-label'))).get_attribute('innerText')
-#     p = int(data.split('of')[0].strip())
-#     t = int(data.split('of')[1].split(' ')[1].strip())
-#     print(p, t)
-#     if p == t:
-#         break
-#
-# while True:
-#     cur_files = os.listdir(path.resource_path(os.environ.get('DOWNLOADPATH')))
-#     sub = [item for item in cur_files if item not in prev_files]
-#     if len(sub) > 0:
-#         sub = sub[0]
-#     if sub and '.csv' in sub and '.crdownload' not in sub:
-#         print(sub)
-#         sheetname = sub
-#         break
-#
-# print('done Downloaed')
+while True:
+    data = WebDriverWait(driver, 99999999).until(
+        EC.visibility_of_element_located((By.CLASS_NAME, 'progress-label'))).get_attribute('innerText')
+    p = int(data.split('of')[0].strip())
+    t = int(data.split('of')[1].split(' ')[1].strip())
+    print(p, t)
+    if p == t:
+        break
+
+while True:
+    cur_files = os.listdir(path.resource_path(os.environ.get('DOWNLOADPATH')))
+    sub = [item for item in cur_files if item not in prev_files]
+    if len(sub) > 0:
+        sub = sub[0]
+    if sub and '.csv' in sub and '.crdownload' not in sub:
+        print(sub)
+        sheetname = sub
+        break
+
+print('done Downloaed')
 # print(path.resource_path('client_secret.json'))
 # ----------------------------------------------------------------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@ tup = []
 cols = list(mong.keys())
 mc = mydb.cursor()
 mc.execute('truncate table new_table')
-# driver.quit()
+driver.quit()
 
 allocate_obj = get_allocate('windy-forge-364809-19af218316ad.json', 'Overall course Completion')
 
@@ -118,7 +118,7 @@ for j in range(1, len(mong[cols[0]])):
         obj['course_started'] = 1
 
     # batch_type
-    if obj['Group(s)'] != None:
+    if obj['Group(s)'] is not None:
         if 'certificationcourse' in obj['Group(s)'].lower().strip():
             obj['batch_type'] = 'Certification Course'
         elif 'IIDE' in obj['Group(s)']:
@@ -141,7 +141,7 @@ for j in range(1, len(mong[cols[0]])):
         obj['completion_status'] = ''
 
         # time_m
-    if obj['completion_time'] != None:
+    if obj['completion_time'] is not None:
         time_in_sheet = obj['completion_time'].split(':')
         hour = time_in_sheet[0]
         min = time_in_sheet[1]
