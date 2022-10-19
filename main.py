@@ -4,9 +4,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from Utils.browser import CreateDriver
+from allocated import get_allocate
 import os
 from Resource import PathResource as path
-# import pygsheets
+import pygsheets
 import pandas as pd
 
 mydb = mysql.connector.connect(
@@ -19,43 +20,43 @@ mydb = mysql.connector.connect(
 )
 buff = 1000
 count = 1
-driver = CreateDriver()
-driver.get('https://learn.iide.co/wp-admin/admin.php?page=learndash-lms-reports')
-driver.find_element(By.CLASS_NAME, 'learndash-data-reports-button').click()
+# driver = CreateDriver()
+# driver.get('https://learn.iide.co/wp-admin/admin.php?page=learndash-lms-reports')
+# driver.find_element(By.CLASS_NAME, 'learndash-data-reports-button').click()
 
-sheetname = ''
+sheetname = 'learndash_reports_user_courses_53f65102cb.csv'
 
 prev_files = os.listdir(path.resource_path(os.environ.get('DOWNLOADPATH')))
 
-while True:
-    data = WebDriverWait(driver, 99999999).until(
-        EC.visibility_of_element_located((By.CLASS_NAME, 'progress-label'))).get_attribute('innerText')
-    p = int(data.split('of')[0].strip())
-    t = int(data.split('of')[1].split(' ')[1].strip())
-    print(p, t)
-    if p == t:
-        break
-
-while True:
-    cur_files = os.listdir(path.resource_path(os.environ.get('DOWNLOADPATH')))
-    sub = [item for item in cur_files if item not in prev_files]
-    if len(sub) > 0:
-        sub = sub[0]
-    if sub and '.csv' in sub and '.crdownload' not in sub:
-        print(sub)
-        sheetname = sub
-        break
-
-print('done Downloaed')
-print(path.resource_path('client_secret.json'))
-
+# while True:
+#     data = WebDriverWait(driver, 99999999).until(
+#         EC.visibility_of_element_located((By.CLASS_NAME, 'progress-label'))).get_attribute('innerText')
+#     p = int(data.split('of')[0].strip())
+#     t = int(data.split('of')[1].split(' ')[1].strip())
+#     print(p, t)
+#     if p == t:
+#         break
+#
+# while True:
+#     cur_files = os.listdir(path.resource_path(os.environ.get('DOWNLOADPATH')))
+#     sub = [item for item in cur_files if item not in prev_files]
+#     if len(sub) > 0:
+#         sub = sub[0]
+#     if sub and '.csv' in sub and '.crdownload' not in sub:
+#         print(sub)
+#         sheetname = sub
+#         break
+#
+# print('done Downloaed')
+# print(path.resource_path('client_secret.json'))
 # ----------------------------------------------------------------------------------------------------------------------------------
 
-# gc = pygsheets.authorize(service_file=path.resource_path('windy-forge-364809-19af218316ad.json'))
-# sh = gc.open('learn_iide')
-# wks = sh.sheet1
+gc = pygsheets.authorize(service_file=path.resource_path('windy-forge-364809-19af218316ad.json'))
+sh = gc.open('learn_iide')
+wks = sh.sheet1
+read = wks.get_all_values()
 
-mong = json.loads(pd.read_csv(path.resource_path(os.environ.get('DOWNLOADPATH') + f'/{sheetname}')).to_json())
+mong = json.loads(pd.read_csv(path.resource_path(os.environ.get('DOWNLOADPATH') + f'{sheetname}')).to_json())
 
 # cols = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
@@ -74,6 +75,9 @@ tup = []
 cols = list(mong.keys())
 mc = mydb.cursor()
 mc.execute('truncate table new_table')
+# driver.quit()
+
+allocate_obj = get_allocate('windy-forge-364809-19af218316ad.json', 'Overall course Completion')
 
 for j in range(1, len(mong[cols[0]])):
     obj = {}
@@ -145,8 +149,12 @@ for j in range(1, len(mong[cols[0]])):
         obj['time_m'] = int(hour) + int(min) + int(sec)
     else:
         obj['time_m'] = ' '
+
+    # allocated
+    obj['allocated'] = allocate_obj.check_allocate(obj['course_title'],obj['Group(s)'])
+
+    # allocated
     tup.append(tuple(obj.values()))
-    print(len(obj.keys()), obj.keys())
     example = {
         "user_id": 992,
         "name": "Zeeshaan",
@@ -178,12 +186,13 @@ for j in range(1, len(mong[cols[0]])):
         "completed_yes": "",
         "course_started": '',
         "batch_type": " ",
-        "time_m": ''
+        "time_m": '',
+        "allocated": ''
     }
     colnames = str(tuple(example.keys())).replace("\'", "")
     if count % buff == 0:
         sql_command = f'insert into new_table {colnames}  VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'\
-                      f'%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) '
+                      f'%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) '
         print(sql_command, tup)
         mc.executemany(sql_command, tup)
         tup = []

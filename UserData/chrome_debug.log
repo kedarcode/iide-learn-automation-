@@ -1,2 +1,4 @@
-[5224:2004:1013/185222.509:INFO:CONSOLE(5)] "JQMIGRATE: Migrate is installed, version 3.3.2", source: https://learn.iide.co/wp-admin/load-scripts.php?c=1&load%5Bchunk_0%5D=jquery-core,jquery-migrate,utils,jquery-ui-core,moxiejs,plupload,jquery-ui-tooltip&ver=6.0.2 (5)
-[5224:2004:1013/185225.197:ERROR:device_event_log_impl.cc(214)] [18:52:25.197] Bluetooth: bluetooth_adapter_winrt.cc:1074 Getting Default Adapter failed.
+[8796:12340:1014/113451.370:INFO:CONSOLE(5)] "JQMIGRATE: Migrate is installed, version 3.3.2", source: https://learn.iide.co/wp-admin/load-scripts.php?c=1&load%5Bchunk_0%5D=jquery-core,jquery-migrate,utils,jquery-ui-core,moxiejs,plupload,jquery-ui-tooltip&ver=6.0.2 (5)
+[8796:12340:1014/113454.728:ERROR:device_event_log_impl.cc(214)] [11:34:54.728] Bluetooth: bluetooth_adapter_winrt.cc:1074 Getting Default Adapter failed.
+[8796:15160:1014/113550.149:ERROR:util.cc(129)] Can't create base directory: C:\Program Files\Google\GoogleUpdater
+[8796:12340:1014/113838.166:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
