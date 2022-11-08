@@ -7,7 +7,6 @@ from Utils.browser import CreateDriver
 from allocated import get_allocate
 import os
 from Resource import PathResource as path
-import pygsheets
 import pandas as pd
 
 mydb = mysql.connector.connect(
