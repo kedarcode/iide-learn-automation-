@@ -20,7 +20,7 @@ mydb = mysql.connector.connect(
 
 buff = 100
 count = 1
-driver = CreateDriver()
+driver = CreateDriver(False)
 driver.get('https://learn.iide.co/wp-admin/admin.php?page=learndash-lms-reports')
 try:
     driver.find_element(By.CLASS_NAME, 'learndash-data-reports-button').click()
