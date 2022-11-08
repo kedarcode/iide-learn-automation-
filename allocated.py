@@ -1,19 +1,12 @@
-import json
-import mysql.connector
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from Utils.browser import CreateDriver
-import os
+
 from Resource import PathResource as path
 import pygsheets
 
-import pandas as pd
 
 
 def normalize(name):
     if name is not None:
-        return name.strip().lower().replace(' ', '')
+        return name.strip().lower().replace(' ','')
     else:
         return
 
@@ -28,16 +21,17 @@ class get_allocate:
     def read_googlesheet(self):
         gc = pygsheets.authorize(service_file=path.resource_path(self.token))
         sh = gc.open(self.sheetname)
-        wks = sh.sheet1
+        wks =sh.worksheet('title','OverallcourseCompletion')
         read = wks.get_all_values()
-
         return read
 
     def make_object(self):
+
         for r in self.read_googlesheet()[1:]:
+            print(r[11])
             if '-' in r[10]:
-                course_title = r[10].split('-')[1]
-                groups = eval(f"""r[10].split('-')[0]{".split(',')" if ',' in r[10].split('-')[0] else ''}""")
+                course_title = r[10].split('-',1)[1]
+                groups = eval(f"""r[10].split('-',1)[0]{".split(',')" if ',' in r[10].split('-')[0] else ''}""")
                 if type(groups) != list:
                     groups = [groups]
                 for g in groups:
@@ -54,3 +48,4 @@ class get_allocate:
             return 1
         else:
             return 0
+

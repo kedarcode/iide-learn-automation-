@@ -11,18 +11,26 @@ import pygsheets
 import pandas as pd
 
 mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    database="learndash",
-    password="",
-    port=3307
-
+    host="reporting.iide.in",
+    user="developer",
+    database="bookmark_reporting",
+    password="3.KkWZHu#4{..dgTF*kMC+cJ:qs2%@e?",
+    port=3306
 )
-buff = 1000
+
+buff = 100
 count = 1
 driver = CreateDriver()
 driver.get('https://learn.iide.co/wp-admin/admin.php?page=learndash-lms-reports')
-driver.find_element(By.CLASS_NAME, 'learndash-data-reports-button').click()
+try:
+    driver.find_element(By.CLASS_NAME, 'learndash-data-reports-button').click()
+except:
+    WebDriverWait(driver, 100).until(
+        EC.visibility_of_element_located((By.ID, 'user_login'))).send_keys('sudanprabjyot@gmail.com')
+    driver.find_element(By.ID,'user_pass').send_keys('($b@v1P^838yr1VdXhnantMo')
+    driver.find_element(By.ID,'wp-submit').click()
+    WebDriverWait(driver, 100).until(
+        EC.visibility_of_element_located((By.ID, 'learndash-data-reports-button'))).click()
 
 sheetname = 'learndash_reports_user_courses_53f65102cb.csv'
 
@@ -48,8 +56,6 @@ while True:
         break
 
 print('done Downloaed')
-# print(path.resource_path('client_secret.json'))
-# ----------------------------------------------------------------------------------------------------------------------------------
 
 gc = pygsheets.authorize(service_file=path.resource_path('windy-forge-364809-19af218316ad.json'))
 sh = gc.open('learn_iide')
@@ -58,24 +64,12 @@ read = wks.get_all_values()
 
 mong = json.loads(pd.read_csv(path.resource_path(os.environ.get('DOWNLOADPATH') + f'{sheetname}')).to_json())
 
-# cols = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-
-
-# def update_sheet(keys):
-#     global wks, mong
-#     for n, i in enumerate(keys):
-#         col = cols[n]
-#         cell = col + '1'
-#         wks.update_value(cell, i)
-#         print(f'{cols[n] + "2"}:{cols[n] + str(len(mong[i]))}', [[str(mong[i][j])] for j in mong[i]])
-#         wks.update_values(f'{cols[n] + "2"}:{cols[n] + str(len(mong[i]) + 2)}', [[str(mong[i][j])] for j in mong[i]])
-# update_sheet(mong.keys())
-
 tup = []
 cols = list(mong.keys())
 mc = mydb.cursor()
-mc.execute('truncate table new_table')
+mc.execute('truncate table learndash')
 driver.quit()
+
 
 allocate_obj = get_allocate('windy-forge-364809-19af218316ad.json', 'Overall course Completion')
 
@@ -87,10 +81,10 @@ for j in range(1, len(mong[cols[0]])):
     # completion status
     if obj['steps_completed'] == obj['steps_total']:
         obj['completion_status'] = 'Completed'
-    elif obj['steps_completed'] < obj['steps_total']:
-        obj['completion_status'] = 'Incomplete'
     elif int(obj['steps_completed']) == 0:
         obj['completion_status'] = 'Not Started'
+    elif obj['steps_completed'] < obj['steps_total']:
+        obj['completion_status'] = 'Incomplete'
     else:
         obj['completion_status'] = ""
     # module completed
@@ -119,7 +113,7 @@ for j in range(1, len(mong[cols[0]])):
 
     # batch_type
     if obj['Group(s)'] is not None:
-        if 'certificationcourse' in obj['Group(s)'].lower().strip():
+        if 'certificationcourse' in obj['Group(s)'].lower().replace(' ',''):
             obj['batch_type'] = 'Certification Course'
         elif 'IIDE' in obj['Group(s)']:
             obj['batch_type'] = '4 Month Course'
@@ -133,10 +127,10 @@ for j in range(1, len(mong[cols[0]])):
     # course_completion_status
     if obj['steps_completed'] == obj['steps_total']:
         obj['completion_status'] = 'Completed'
-    elif obj['steps_completed'] < obj['steps_total']:
-        obj['completion_status'] = 'WIP'
     elif int(obj['steps_completed']) == 0:
         obj['completion_status'] = 'Not Started'
+    elif obj['steps_completed'] < obj['steps_total']:
+        obj['completion_status'] = 'WIP'
     else:
         obj['completion_status'] = ''
 
@@ -146,15 +140,40 @@ for j in range(1, len(mong[cols[0]])):
         hour = time_in_sheet[0]
         min = time_in_sheet[1]
         sec = time_in_sheet[2]
-        obj['time_m'] = int(hour) + int(min) + int(sec)
+        obj['time_m'] = float((int(hour)*60) + int(min) + (int(sec)/60))
+        print(obj['time_m'])
     else:
-        obj['time_m'] = ' '
+        obj['time_m'] = 0
+
+    #total_time
+    if obj['completion_time'] is not None:
+        time_in_sheet = obj['completion_time'].split(':')
+        hour = time_in_sheet[0]
+        min = time_in_sheet[1]
+        sec = time_in_sheet[2]
+        obj['completion_time'] = float((int(hour)*60) + int(min) + (int(sec)/60))
+        print(obj['completion_time'])
+    else:
+        obj['completion_time'] = 0
+
+    #completion_time
+    if obj['total_time'] is not None:
+        time_in_sheet = obj['total_time'].split(':')
+        hour = time_in_sheet[0]
+        min = time_in_sheet[1]
+        sec = time_in_sheet[2]
+        obj['total_time'] = float((int(hour)*60) + int(min) + (int(sec)/60))
+        print(obj['total_time'])
+    else:
+        obj['total_time'] = 0
 
     # allocated
-    obj['allocated'] = allocate_obj.check_allocate(obj['course_title'],obj['Group(s)'])
+    # obj['allocated'] = allocate_obj.check_allocate(obj['course_title'],obj['Group(s)'])
+    obj['allocated']=0
 
     # allocated
     tup.append(tuple(obj.values()))
+
     example = {
         "user_id": 992,
         "name": "Zeeshaan",
@@ -191,7 +210,7 @@ for j in range(1, len(mong[cols[0]])):
     }
     colnames = str(tuple(example.keys())).replace("\'", "")
     if count % buff == 0:
-        sql_command = f'insert into new_table {colnames}  VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'\
+        sql_command = f'insert into learndash {colnames}  VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'\
                       f'%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) '
         print(sql_command, tup)
         mc.executemany(sql_command, tup)
@@ -199,3 +218,14 @@ for j in range(1, len(mong[cols[0]])):
         mydb.commit()
 
     count += 1
+
+
+mc = mydb.cursor()
+mc.execute('select steps_completed ,course_title,Groupss from learndash where steps_completed>0 group by Groupss,course_title')
+data = mc.fetchall()
+for d in data :
+    mc = mydb.cursor()
+    query = f'update learndash set allocated = 1 where course_title = "{d[1]}" and Groupss="{d[2]}"'
+    mc.execute(query)
+    mydb.commit()
+    print(query)
