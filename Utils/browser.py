@@ -9,7 +9,7 @@ load_dotenv()
 
 class CreateDriver:
     def __new__(cls, flag: bool= True):
-            PATH = path.resource_path(os.environ.get('DRIVERPATH') + "chromedriver.exe")
+            PATH = path.resource_path(os.environ.get('DRIVERPATH'))
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")
             prefs = {"download.default_directory": path.resource_path(os.environ.get('DOWNLOADPATH'))}
