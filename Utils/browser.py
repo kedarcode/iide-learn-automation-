@@ -9,7 +9,7 @@ load_dotenv()
 
 class CreateDriver:
     def __new__(cls, flag: bool= True):
-            PATH = r'/root/learndash_report/iide-learn-automation-/driverDir/chromedriver.exe'
+            PATH = r'/root/learndash_report/iide-learn-automation-/driverDir/chromedriver'
             options = webdriver.ChromeOptions()
             options.add_argument("start-maximized")
             prefs = {"download.default_directory": path.resource_path(os.environ.get('DOWNLOADPATH'))}
@@ -25,7 +25,7 @@ class CreateDriver:
             options.add_argument('--headless')
             options.add_experimental_option("detach", True)
             print(PATH)
-            driver = webdriver.Chrome(executable_path=PATH,options=options)
+            driver = webdriver.Chrome(PATH,options=options)
             stealth(driver,
                     languages=["en-US", "en"],
                     vendor="Google Inc.",
