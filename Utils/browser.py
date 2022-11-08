@@ -21,8 +21,8 @@ class CreateDriver:
             options.add_experimental_option('useAutomationExtension', False)
             options.add_argument('--disable-blink-features=AutomationControlled')
             options.add_argument("--user-data-dir=" + path.resource_path(os.environ.get('USER_DATA')))
-
-            if not flag: options.add_argument('--headless')
+            options.add_argument('--no-sandbox')
+            options.add_argument('--headless')
             options.add_experimental_option("detach", True)
             driver = webdriver.Chrome( options=options)
             stealth(driver,
