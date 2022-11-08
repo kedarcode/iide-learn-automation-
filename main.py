@@ -56,10 +56,10 @@ while True:
 
 print('done Downloaed')
 
-gc = pygsheets.authorize(service_file=path.resource_path('windy-forge-364809-19af218316ad.json'))
-sh = gc.open('learn_iide')
-wks = sh.sheet1
-read = wks.get_all_values()
+# gc = pygsheets.authorize(service_file=path.resource_path('windy-forge-364809-19af218316ad.json'))
+# sh = gc.open('learn_iide')
+# wks = sh.sheet1
+# read = wks.get_all_values()
 
 mong = json.loads(pd.read_csv(path.resource_path(os.environ.get('DOWNLOADPATH') + f'{sheetname}')).to_json())
 
