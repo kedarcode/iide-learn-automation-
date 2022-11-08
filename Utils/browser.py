@@ -24,6 +24,7 @@ class CreateDriver:
 
             if not flag: options.add_argument('--headless')
             options.add_experimental_option("detach", True)
+            print(PATH)
             driver = webdriver.Chrome(PATH, options=options)
             stealth(driver,
                     languages=["en-US", "en"],
