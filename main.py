@@ -197,7 +197,6 @@ for j in range(1, len(mong[cols[0]])):
         "course_last_step_type": "",
         "course_last_step_title": "",
         "last_login_date": "",
-        "certificate_ids": "No tracked certificates.",
         "completion_status": "WIP",
         "module_completed": '',
         "steps_taken": '',
@@ -209,7 +208,7 @@ for j in range(1, len(mong[cols[0]])):
     }
     colnames = str(tuple(example.keys())).replace("\'", "")
     if count % buff == 0:
-        sql_command = f'insert into learndash {colnames}  VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'\
+        sql_command = f'insert into learndash {colnames}  VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,'\
                       f'%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) '
         print(sql_command, tup)
         mc.executemany(sql_command, tup)
