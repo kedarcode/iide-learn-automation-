@@ -19,6 +19,11 @@ mydb = mysql.connector.connect(
 
 buff = 100
 count = 1
+
+dir = path.resource_path(os.environ.get('DOWNLOADPATH'))
+for f in os.listdir(dir):
+    os.remove(os.path.join(dir, f))
+
 driver = CreateDriver()
 driver.get('https://learn.iide.co/wp-admin/admin.php?page=learndash-lms-reports')
 try:
